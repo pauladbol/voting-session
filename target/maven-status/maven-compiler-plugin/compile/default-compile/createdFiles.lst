@@ -1,0 +1,5 @@
+br\com\tecchallenge\Application.class
+br\com\tecchallenge\models\Subject.class
+br\com\tecchallenge\services\SubjectService.class
+br\com\tecchallenge\services\implementations\SubjectServiceImpl.class
+br\com\tecchallenge\web\controllers\SubjectController.class

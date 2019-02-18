@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: voting-session
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: pauladbol
+Implementation-Vendor-Id: br.com.tecchallenge
+Build-Jdk: 1.8.0_171
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
