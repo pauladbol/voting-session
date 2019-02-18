@@ -9,13 +9,11 @@ public class Subject implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private final long id;
+	private long id;
 	private String subject;
 	
-	
-	public Subject(long id) {
+	public Subject() {
 		super();
-		this.id = id;
 	}
 
 	public Subject(long id, String subject) {
@@ -31,9 +29,12 @@ public class Subject implements Serializable{
 		return subject;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public void setSubject(String string) {
 		this.subject = string;
-	}
-	
+	}	
 	
 }

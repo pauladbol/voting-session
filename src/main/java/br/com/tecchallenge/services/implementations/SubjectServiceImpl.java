@@ -43,13 +43,12 @@ public class SubjectServiceImpl implements SubjectService{
 
 	@Override
 	public void delete(String subjectId) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 	
 	private Subject mockSubject(int i) {
-		Subject person = new Subject(counter.incrementAndGet(), "Pauta 1");
+		Subject subject = new Subject(counter.incrementAndGet(), "Pauta 1");
 
-	    return person;
+	    return subject;
 	}
 }
