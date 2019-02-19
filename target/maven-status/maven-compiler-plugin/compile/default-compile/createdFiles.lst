@@ -1,5 +1,13 @@
 br\com\tecchallenge\Application.class
 br\com\tecchallenge\models\Subject.class
-br\com\tecchallenge\services\SubjectService.class
-br\com\tecchallenge\services\implementations\SubjectServiceImpl.class
-br\com\tecchallenge\web\controllers\SubjectController.class
+br\com\tecchallenge\repositories\VoteRepository.class
+br\com\tecchallenge\repositories\UserRepository.class
+br\com\tecchallenge\resources\UserResource.class
+br\com\tecchallenge\repositories\SubjectRepository.class
+br\com\tecchallenge\models\Vote.class
+br\com\tecchallenge\resources\SubjectResource.class
+br\com\tecchallenge\resources\VoteResource.class
+br\com\tecchallenge\resources\SessionResource.class
+br\com\tecchallenge\repositories\SessionRepository.class
+br\com\tecchallenge\models\User.class
+br\com\tecchallenge\models\Session.class

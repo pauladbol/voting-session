@@ -1,13 +1,36 @@
 package br.com.tecchallenge.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+@Entity
+@Table(name="tb_vote")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vote {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
+	@NotNull
 	private boolean vote;
-	private User user;
+	
+	@ManyToOne
+    @JoinColumn(name = "userId")
+	private User userId;
+	
+	@ManyToOne
+	@JoinColumn(name = "session")
+	private Session session;
+	
 	
 	public Vote() {
 		super();
@@ -17,7 +40,7 @@ public class Vote {
 		super();
 		this.id = id;
 		this.vote = vote;
-		this.user = user;
+		this.userId = user;
 	}
 
 	public long getId() {
@@ -37,11 +60,20 @@ public class Vote {
 	}
 
 	public User getUser() {
-		return user;
+		return userId;
 	}
 
 	public void setUser(User user) {
-		this.user = user;
+		this.userId = user;
 	}
 
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	
 }
