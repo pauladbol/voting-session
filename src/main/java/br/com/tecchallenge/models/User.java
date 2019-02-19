@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -25,6 +26,7 @@ public class User {
 	private String username;
 	
 	@OneToMany(mappedBy="userId", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Vote> votes;
 	
 	public User() {

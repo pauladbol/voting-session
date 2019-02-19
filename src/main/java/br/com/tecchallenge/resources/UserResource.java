@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tecchallenge.models.User;
-import br.com.tecchallenge.repositories.UserRepository;
+import br.com.tecchallenge.services.UserService;
 
 
 @CrossOrigin(origins = "*")
@@ -25,31 +25,31 @@ import br.com.tecchallenge.repositories.UserRepository;
 public class UserResource {
 	
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
 	@GetMapping("/users")
 	public List<User> listUsers(){
-		return userRepository.findAll();
+		return userService.listUsers();
 	}
 	
 	@GetMapping("/user/{id}")
 	public User findUser(@PathVariable(value="id") long id){
-		return userRepository.findById(id);
+		return userService.findUser(id);
 	}
 	
 	@PostMapping("/user")
 	public User saveUser(@RequestBody @Valid User user) {
-		return userRepository.save(user);
+		return userService.saveUser(user);
 	}
 	
 	@DeleteMapping("/user")
 	public void deleteUser(@RequestBody @Valid User user) {
-		userRepository.delete(user);
+		userService.deleteUser(user);
 	}
 	
 	@PutMapping("/user")
 	public User updateUser(@RequestBody @Valid User user) {
-		return userRepository.save(user);
+		return userService.updateUser(user);
 	}
 	 
 

@@ -3,6 +3,7 @@ package br.com.tecchallenge.models;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ public class Subject implements Serializable{
 	private String subject;
 	
 	@OneToMany(mappedBy="subjectId", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Session> sessions;
 	
 	public Subject() {

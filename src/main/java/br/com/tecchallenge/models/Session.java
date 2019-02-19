@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,21 +31,26 @@ public class Session {
 	@NotNull
 	private Date sessionEnd;
 	
+	private String sessionResult;
+	
 	@ManyToOne
 	@JoinColumn(name = "subjectId")
+	@JsonIgnore
 	private Subject subjectId;
 	
 	@OneToMany(mappedBy="session", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Vote> votes;
 	
 	public Session() {
 		super();
 	}	
 
-	public Session(Date sessionBegin, Date sessionEnd, Subject subject) {
+	public Session(Date sessionBegin, Date sessionEnd, String sessionResult, Subject subject) {
 		super();
 		this.sessionBegin = sessionBegin;
 		this.sessionEnd = sessionEnd;
+		this.sessionResult = sessionResult;
 		this.subjectId = subject;
 	}
 	
@@ -69,6 +75,22 @@ public class Session {
 
 	public void setSessionEnd(Date sessionEnd) {
 		this.sessionEnd = sessionEnd;
+	}
+
+	public String getSessionResult() {
+		return sessionResult;
+	}
+
+	public void setSessionResult(String sessionResult) {
+		this.sessionResult = sessionResult;
+	}
+
+	public Subject getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(Subject subjectId) {
+		this.subjectId = subjectId;
 	}
 
 	public Subject getSubject() {

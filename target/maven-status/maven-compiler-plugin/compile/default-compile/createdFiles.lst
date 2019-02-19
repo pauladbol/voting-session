@@ -9,5 +9,6 @@ br\com\tecchallenge\resources\SubjectResource.class
 br\com\tecchallenge\resources\VoteResource.class
 br\com\tecchallenge\resources\SessionResource.class
 br\com\tecchallenge\repositories\SessionRepository.class
+br\com\tecchallenge\services\VoteService.class
 br\com\tecchallenge\models\User.class
 br\com\tecchallenge\models\Session.class

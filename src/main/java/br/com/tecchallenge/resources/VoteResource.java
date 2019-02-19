@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tecchallenge.models.Vote;
-import br.com.tecchallenge.repositories.VoteRepository;
+import br.com.tecchallenge.services.VoteService;
 
 
 @CrossOrigin(origins = "*")
@@ -25,31 +25,31 @@ import br.com.tecchallenge.repositories.VoteRepository;
 public class VoteResource {
 	
 	@Autowired
-	VoteRepository voteRepository;
+	VoteService voteService;
 	
 	@GetMapping("/votes")
 	public List<Vote> listVotes(){
-		return voteRepository.findAll();
+		return voteService.listVotes();
 	}
 	
 	@GetMapping("/vote/{id}")
 	public Vote findVote(@PathVariable(value="id") long id){
-		return voteRepository.findById(id);
+		return voteService.findVote(id);
 	}
 	
 	@PostMapping("/vote")
 	public Vote saveVote(@RequestBody @Valid Vote vote) {
-		return voteRepository.save(vote);
+			return voteService.saveVote(vote);		
 	}
 	
 	@DeleteMapping("/vote")
 	public void deleteVote(@RequestBody @Valid Vote vote) {
-		voteRepository.delete(vote);
+		voteService.deleteVote(vote);
 	}
 	
 	@PutMapping("/vote")
 	public Vote updateVote(@RequestBody @Valid Vote vote) {
-		return voteRepository.save(vote);
+		return voteService.updateVote(vote);
 	}
 	 
 

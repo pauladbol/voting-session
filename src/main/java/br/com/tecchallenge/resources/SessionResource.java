@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tecchallenge.models.Session;
-import br.com.tecchallenge.repositories.SessionRepository;
+import br.com.tecchallenge.services.SessionService;
 
 
 @CrossOrigin(origins = "*")
@@ -25,32 +25,36 @@ import br.com.tecchallenge.repositories.SessionRepository;
 public class SessionResource {
 	
 	@Autowired
-	SessionRepository sessionRepository;
+	SessionService sessionService;
 	
 	@GetMapping("/sessions")
 	public List<Session> listSessions(){
-		return sessionRepository.findAll();
+		return sessionService.listSessions();
 	}
 	
 	@GetMapping("/session/{id}")
 	public Session findSession(@PathVariable(value="id") long id){
-		return sessionRepository.findById(id);
+		return sessionService.findSession(id);
 	}
 	
 	@PostMapping("/session")
 	public Session saveSession(@RequestBody @Valid Session session) {
-		return sessionRepository.save(session);
+		return sessionService.saveSession(session);
 	}
 	
 	@DeleteMapping("/session")
 	public void deleteSession(@RequestBody @Valid Session session) {
-		sessionRepository.delete(session);
+		sessionService.deleteSession(session);
 	}
 	
 	@PutMapping("/session")
 	public Session updateSession(@RequestBody @Valid Session session) {
-		return sessionRepository.save(session);
+		return sessionService.updateSession(session);
 	}
-	 
+	
+	@GetMapping("/session/{id}/result")
+	public long findSessionResult(@PathVariable(value="id") long id){
+		return sessionService.findSessionResult(id);
+	}
 
 }

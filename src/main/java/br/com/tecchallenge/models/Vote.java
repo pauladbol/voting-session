@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -25,10 +26,12 @@ public class Vote {
 	
 	@ManyToOne
     @JoinColumn(name = "userId")
+	@JsonIgnore
 	private User userId;
 	
 	@ManyToOne
 	@JoinColumn(name = "session")
+	@JsonIgnore
 	private Session session;
 	
 	
