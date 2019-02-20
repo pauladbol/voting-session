@@ -7,19 +7,18 @@ import org.springframework.stereotype.Service;
 
 import br.com.tecchallenge.models.Vote;
 import br.com.tecchallenge.repositories.VoteRepository;
-import br.com.tecchallenge.services.SessionService;
 
 @Service
 public class VoteService {
 	
 	private VoteRepository voteRepository;
-	private SessionService sessionService;
+	private SubjectService subjectService;
 
 	@Autowired
-	public VoteService(VoteRepository voteRepository, SessionService sessionService) {
+	public VoteService(VoteRepository voteRepository, SubjectService subjectService) {
 		super();
 		this.setVoteRepository(voteRepository);
-		this.sessionService = sessionService;
+		this.subjectService = subjectService;
 	}
 	
 	public List<Vote> listVotes(){
@@ -31,14 +30,15 @@ public class VoteService {
 	}
 	
 	public Vote saveVote(Vote vote) {
-		long idSession = vote.getSession().getId();
+		long idSubject = vote.getSubject().getId();
 		long idUser = vote.getUser().getId();
 		
-		if (sessionService.isSessionOpen(idSession) &&
-				!sessionService.didUserVote(idSession, idUser)) {
+		if (subjectService.isSessionOpen(idSubject) &&
+				!subjectService.didUserVote(idSubject, idUser)) {
 			return voteRepository.save(vote);
 		}
 		
+//		return voteRepository.save(vote);
 		return null;
 		
 	}

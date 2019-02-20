@@ -1,11 +1,14 @@
 package br.com.tecchallenge.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.models.Subject;
+import br.com.tecchallenge.models.Vote;
 import br.com.tecchallenge.repositories.SubjectRepository;
 
 @Service
@@ -46,6 +49,57 @@ public class SubjectService {
 
 	public void setSubjectRepository(SubjectRepository subjectRepository) {
 		this.subjectRepository = subjectRepository;
+	}
+
+	public boolean isSessionOpen(long id) {
+		Date now = new Date();
+		
+		Subject currentSubject = subjectRepository.findById(id);
+		
+		Session currentSession = currentSubject.getSession();
+	
+		if (currentSession.getSessionBegin().compareTo(now) < 0 && 
+				currentSession.getSessionEnd().compareTo(now) > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean didUserVote(long idSubject, long idUser) {
+		Subject currentSubject = subjectRepository.findById(idSubject);
+		
+		List<Vote> votes = currentSubject.getVotes();
+		
+		if (votes.stream().anyMatch(vote -> vote.getUser().getId() == idUser)){
+			return true;
+		}
+		
+		return false;
+	}
+
+	public Subject findSubjectResult(long id) {
+		Subject currentSubject = subjectRepository.findById(id);
+		
+		if (!isSessionOpen(id)) {
+			List<Vote> votes = currentSubject.getVotes();
+			
+			long votesYes = (votes.stream().filter(vote -> vote.isVote())).count();
+			
+			long votesNo = (votes.stream().filter(vote -> !vote.isVote())).count();
+			
+			if (votesYes > votesNo) {
+				currentSubject.setSubjectResult("Pauta Aprovada");
+				
+			} else {
+				currentSubject.setSubjectResult("Pauta Reprovada");
+			}
+			
+			return currentSubject;
+		}
+		
+		return null;
+		
 	}
 
 }

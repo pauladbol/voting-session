@@ -52,5 +52,8 @@ public class SubjectResource {
 		return subjectService.updateSubject(subject);
 	}
 	 
-
+	@GetMapping("/subject/{id}/result")
+	public Subject findSubjectResult(@PathVariable(value="id") long id){
+		return subjectService.findSubjectResult(id);
+	}
 }

@@ -1,16 +1,14 @@
 package br.com.tecchallenge.models;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -31,16 +29,10 @@ public class Session {
 	@NotNull
 	private Date sessionEnd;
 	
-	private String sessionResult;
-	
-	@ManyToOne
+	@OneToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name = "subjectId")
 	@JsonIgnore
 	private Subject subjectId;
-	
-	@OneToMany(mappedBy="session", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Vote> votes;
 	
 	public Session() {
 		super();
@@ -50,7 +42,6 @@ public class Session {
 		super();
 		this.sessionBegin = sessionBegin;
 		this.sessionEnd = sessionEnd;
-		this.sessionResult = sessionResult;
 		this.subjectId = subject;
 	}
 	
@@ -77,14 +68,6 @@ public class Session {
 		this.sessionEnd = sessionEnd;
 	}
 
-	public String getSessionResult() {
-		return sessionResult;
-	}
-
-	public void setSessionResult(String sessionResult) {
-		this.sessionResult = sessionResult;
-	}
-
 	public Subject getSubjectId() {
 		return subjectId;
 	}
@@ -99,15 +82,6 @@ public class Session {
 
 	public void setSubject(Subject subject) {
 		this.subjectId = subject;
-	}
-
-	public List<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(List<Vote> votes) {
-		this.votes = votes;
-	}
-	
+	}	
 	
 }

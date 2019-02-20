@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.services.SessionService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/api")
@@ -50,11 +49,6 @@ public class SessionResource {
 	@PutMapping("/session")
 	public Session updateSession(@RequestBody @Valid Session session) {
 		return sessionService.updateSession(session);
-	}
-	
-	@GetMapping("/session/{id}/result")
-	public long findSessionResult(@PathVariable(value="id") long id){
-		return sessionService.findSessionResult(id);
 	}
 
 }

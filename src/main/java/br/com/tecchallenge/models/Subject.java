@@ -6,13 +6,17 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -26,12 +30,19 @@ public class Subject implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@NotNull
+
 	private String subject;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Session session;
 	
 	@OneToMany(mappedBy="subjectId", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Session> sessions;
+	private List<Vote> votes;
+	
+	@Transient
+	private String subjectResult;
 	
 	public Subject() {
 		super();
@@ -58,12 +69,30 @@ public class Subject implements Serializable{
 		this.subject = string;
 	}
 
-	public List<Session> getSessions() {
-		return sessions;
+	public Session getSession() {
+		return session;
 	}
 
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public List<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
+	}
+
+	public String getSubjectResult() {
+		return subjectResult;
+	}
+
+	public void setSubjectResult(String subjectResult) {
+		this.subjectResult = subjectResult;
 	}	
+	
+	
 	
 }

@@ -30,9 +30,9 @@ public class Vote {
 	private User userId;
 	
 	@ManyToOne
-	@JoinColumn(name = "session")
-	@JsonIgnore
-	private Session session;
+	@JoinColumn(name = "subjectId")
+//	@JsonIgnore
+	private Subject subjectId;
 	
 	
 	public Vote() {
@@ -70,12 +70,12 @@ public class Vote {
 		this.userId = user;
 	}
 
-	public Session getSession() {
-		return session;
+	public Subject getSubject() {
+		return subjectId;
 	}
 
-	public void setSession(Session session) {
-		this.session = session;
+	public void setSubject(Subject subject) {
+		this.subjectId = subject;
 	}
 
 	
