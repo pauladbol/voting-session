@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.services.SessionService;
 
@@ -33,6 +34,9 @@ public class SessionResource {
 	
 	@GetMapping("/session/{id}")
 	public Session findSession(@PathVariable(value="id") long id){
+		if (sessionService.findSession(id) == null)
+			throw new ResourceNotFoundException("Sessão " + id + " não encontrada.");
+		
 		return sessionService.findSession(id);
 	}
 	
@@ -43,11 +47,17 @@ public class SessionResource {
 	
 	@DeleteMapping("/session")
 	public void deleteSession(@RequestBody @Valid Session session) {
+		if (sessionService.findSession(session.getId()) == null)
+			throw new ResourceNotFoundException("Sessão " + session.getId() + " não encontrada.");
+		
 		sessionService.deleteSession(session);
 	}
 	
 	@PutMapping("/session")
 	public Session updateSession(@RequestBody @Valid Session session) {
+		if (sessionService.findSession(session.getId()) == null)
+			throw new ResourceNotFoundException("Sessão " + session.getId() + " não encontrada.");
+		
 		return sessionService.updateSession(session);
 	}
 

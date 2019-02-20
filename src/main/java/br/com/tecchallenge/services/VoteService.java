@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tecchallenge.exceptions.ValidationException;
 import br.com.tecchallenge.models.Vote;
 import br.com.tecchallenge.repositories.VoteRepository;
 
@@ -33,13 +34,15 @@ public class VoteService {
 		long idSubject = vote.getSubject().getId();
 		long idUser = vote.getUser().getId();
 		
-		if (subjectService.isSessionOpen(idSubject) &&
-				!subjectService.didUserVote(idSubject, idUser)) {
-			return voteRepository.save(vote);
-		}
+		if (!subjectService.isSessionOpen(idSubject))
+			throw new ValidationException("Sessão " + vote.getSubject().getSession().getId() + 
+											" está fechada, não é possível votar.");
+			
+		if(subjectService.didUserVote(idSubject, idUser))
+			throw new ValidationException("Usuário " + vote.getUser().getUsername() + 
+											" já votou.");
 		
-//		return voteRepository.save(vote);
-		return null;
+		return voteRepository.save(vote);
 		
 	}
 

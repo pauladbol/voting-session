@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.Vote;
 import br.com.tecchallenge.services.VoteService;
 
@@ -34,6 +35,9 @@ public class VoteResource {
 	
 	@GetMapping("/vote/{id}")
 	public Vote findVote(@PathVariable(value="id") long id){
+		if (voteService.findVote(id) == null)
+			throw new ResourceNotFoundException("Voto " + id + " não encontrado.");
+		
 		return voteService.findVote(id);
 	}
 	
@@ -44,11 +48,17 @@ public class VoteResource {
 	
 	@DeleteMapping("/vote")
 	public void deleteVote(@RequestBody @Valid Vote vote) {
+		if (voteService.findVote(vote.getId()) == null)
+			throw new ResourceNotFoundException("Voto " + vote.getId() + " não encontrado.");
+		
 		voteService.deleteVote(vote);
 	}
 	
 	@PutMapping("/vote")
 	public Vote updateVote(@RequestBody @Valid Vote vote) {
+		if (voteService.findVote(vote.getId()) == null)
+			throw new ResourceNotFoundException("Voto " + vote.getId() + " não encontrado.");
+		
 		return voteService.updateVote(vote);
 	}
 	 

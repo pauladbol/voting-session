@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tecchallenge.exceptions.ValidationException;
 import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.models.Subject;
 import br.com.tecchallenge.models.Vote;
@@ -81,24 +82,24 @@ public class SubjectService {
 	public Subject findSubjectResult(long id) {
 		Subject currentSubject = subjectRepository.findById(id);
 		
-		if (!isSessionOpen(id)) {
-			List<Vote> votes = currentSubject.getVotes();
+		if (isSessionOpen(id))
+		throw new ValidationException("Sessão " + currentSubject.getSession().getId() + 
+				" está aberta, não é possível contabilizar os votos.");
+		
+		List<Vote> votes = currentSubject.getVotes();
+		
+		long votesYes = (votes.stream().filter(vote -> vote.isVote())).count();
+		
+		long votesNo = (votes.stream().filter(vote -> !vote.isVote())).count();
+		
+		if (votesYes > votesNo) {
+			currentSubject.setSubjectResult("Pauta Aprovada");
 			
-			long votesYes = (votes.stream().filter(vote -> vote.isVote())).count();
-			
-			long votesNo = (votes.stream().filter(vote -> !vote.isVote())).count();
-			
-			if (votesYes > votesNo) {
-				currentSubject.setSubjectResult("Pauta Aprovada");
-				
-			} else {
-				currentSubject.setSubjectResult("Pauta Reprovada");
-			}
-			
-			return currentSubject;
+		} else {
+			currentSubject.setSubjectResult("Pauta Reprovada");
 		}
 		
-		return null;
+		return currentSubject;
 		
 	}
 

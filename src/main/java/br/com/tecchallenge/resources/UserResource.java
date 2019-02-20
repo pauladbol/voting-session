@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.User;
 import br.com.tecchallenge.services.UserService;
 
@@ -34,6 +35,8 @@ public class UserResource {
 	
 	@GetMapping("/user/{id}")
 	public User findUser(@PathVariable(value="id") long id){
+		if (userService.findUser(id) == null)
+			throw new ResourceNotFoundException("Usuário " + id + " não encontrado.");
 		return userService.findUser(id);
 	}
 	
@@ -44,11 +47,15 @@ public class UserResource {
 	
 	@DeleteMapping("/user")
 	public void deleteUser(@RequestBody @Valid User user) {
+		if (userService.findUser(user.getId()) == null)
+			throw new ResourceNotFoundException("Usuário " + user.getId() + " não encontrado.");
 		userService.deleteUser(user);
 	}
 	
 	@PutMapping("/user")
 	public User updateUser(@RequestBody @Valid User user) {
+		if (userService.findUser(user.getId()) == null)
+			throw new ResourceNotFoundException("Usuário " + user.getId() + " não encontrado.");
 		return userService.updateUser(user);
 	}
 	 
