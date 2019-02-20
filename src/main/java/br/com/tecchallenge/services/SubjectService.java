@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.exceptions.ValidationException;
 import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.models.Subject;
@@ -58,6 +59,9 @@ public class SubjectService {
 		Subject currentSubject = subjectRepository.findById(id);
 		
 		Session currentSession = currentSubject.getSession();
+		
+		if (currentSession == null)
+			throw new ResourceNotFoundException("Pauta não possui uma sessão.");
 	
 		if (currentSession.getSessionBegin().compareTo(now) < 0 && 
 				currentSession.getSessionEnd().compareTo(now) > 0) {
