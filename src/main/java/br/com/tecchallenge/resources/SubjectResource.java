@@ -38,7 +38,7 @@ public class SubjectResource {
 	}
 	
 	@ApiOperation(value="Retorna uma pauta")
-	@GetMapping("/subject/{id}")
+	@GetMapping("/subjects/{id}")
 	public Subject findSubject(@PathVariable(value="id") long id){
 		if (subjectService.findSubject(id) == null)
 			throw new ResourceNotFoundException("Pauta " + id + " não encontrada.");
@@ -47,13 +47,13 @@ public class SubjectResource {
 	}
 	
 	@ApiOperation(value="Salva uma pauta")
-	@PostMapping("/subject")
+	@PostMapping("/subjects")
 	public Subject saveSubject(@RequestBody @Valid Subject subject) {
 		return subjectService.saveSubject(subject);
 	}
 	
 	@ApiOperation(value="Deleta uma pauta")
-	@DeleteMapping("/subject")
+	@DeleteMapping("/subjects")
 	public void deleteSubject(@RequestBody @Valid Subject subject) {
 		if (subjectService.findSubject(subject.getId()) == null)
 			throw new ResourceNotFoundException("Pauta " + subject.getId() + " não encontrada.");
@@ -62,7 +62,7 @@ public class SubjectResource {
 	}
 	
 	@ApiOperation(value="Altera uma pauta")
-	@PutMapping("/subject")
+	@PutMapping("/subjects")
 	public Subject updateSubject(@RequestBody @Valid Subject subject) {
 		if (subjectService.findSubject(subject.getId()) == null)
 			throw new ResourceNotFoundException("Pauta " + subject.getId() + " não encontrada.");
@@ -71,7 +71,7 @@ public class SubjectResource {
 	}
 	 
 	@ApiOperation(value="Retorna uma pauta com o resultado dos votos calculado")
-	@GetMapping("/subject/{id}/result")
+	@GetMapping("/subjects/{id}/result")
 	public Subject findSubjectResult(@PathVariable(value="id") long id){
 		if (subjectService.findSubject(id) == null)
 			throw new ResourceNotFoundException("Pauta " + id + " não encontrada.");

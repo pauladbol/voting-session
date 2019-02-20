@@ -36,7 +36,7 @@ public class VoteResource {
 	}
 	
 	@ApiOperation(value="Retorna um voto")
-	@GetMapping("/vote/{id}")
+	@GetMapping("/votes/{id}")
 	public Vote findVote(@PathVariable(value="id") long id){
 		if (voteService.findVote(id) == null)
 			throw new ResourceNotFoundException("Voto " + id + " não encontrado.");
@@ -45,13 +45,13 @@ public class VoteResource {
 	}
 	
 	@ApiOperation(value="Salva um voto")
-	@PostMapping("/vote")
+	@PostMapping("/votes")
 	public Vote saveVote(@RequestBody @Valid Vote vote) {
 			return voteService.saveVote(vote);		
 	}
 	
 	@ApiOperation(value="Deleta um voto")
-	@DeleteMapping("/vote")
+	@DeleteMapping("/votes")
 	public void deleteVote(@RequestBody @Valid Vote vote) {
 		if (voteService.findVote(vote.getId()) == null)
 			throw new ResourceNotFoundException("Voto " + vote.getId() + " não encontrado.");
@@ -60,7 +60,7 @@ public class VoteResource {
 	}
 	
 	@ApiOperation(value="Altera um voto")
-	@PutMapping("/vote")
+	@PutMapping("/votes")
 	public Vote updateVote(@RequestBody @Valid Vote vote) {
 		if (voteService.findVote(vote.getId()) == null)
 			throw new ResourceNotFoundException("Voto " + vote.getId() + " não encontrado.");

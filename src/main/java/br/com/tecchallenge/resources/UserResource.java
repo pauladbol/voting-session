@@ -38,7 +38,7 @@ public class UserResource {
 	}
 	
 	@ApiOperation(value="Retorna um usuário")	
-	@GetMapping("/user/{id}")
+	@GetMapping("/users/{id}")
 	public User findUser(@PathVariable(value="id") long id){
 		if (userService.findUser(id) == null)
 			throw new ResourceNotFoundException("Usuário " + id + " não encontrado.");
@@ -46,13 +46,13 @@ public class UserResource {
 	}
 	
 	@ApiOperation(value="Salva um usuário")
-	@PostMapping("/user")
+	@PostMapping("/users")
 	public User saveUser(@RequestBody @Valid User user) {
 		return userService.saveUser(user);
 	}
 	
 	@ApiOperation(value="Deleta um usuário")
-	@DeleteMapping("/user")
+	@DeleteMapping("/users")
 	public void deleteUser(@RequestBody @Valid User user) {
 		if (userService.findUser(user.getId()) == null)
 			throw new ResourceNotFoundException("Usuário " + user.getId() + " não encontrado.");
@@ -60,7 +60,7 @@ public class UserResource {
 	}
 	
 	@ApiOperation(value="Altera um usuário")
-	@PutMapping("/user")
+	@PutMapping("/users")
 	public User updateUser(@RequestBody @Valid User user) {
 		if (userService.findUser(user.getId()) == null)
 			throw new ResourceNotFoundException("Usuário " + user.getId() + " não encontrado.");

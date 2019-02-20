@@ -37,7 +37,7 @@ public class SessionResource {
 	}
 	
 	@ApiOperation(value="Retorna uma sessão")
-	@GetMapping("/session/{id}")
+	@GetMapping("/sessions/{id}")
 	public Session findSession(@PathVariable(value="id") long id){
 		if (sessionService.findSession(id) == null)
 			throw new ResourceNotFoundException("Sessão " + id + " não encontrada.");
@@ -46,13 +46,13 @@ public class SessionResource {
 	}
 	
 	@ApiOperation(value="Salva uma sessão")
-	@PostMapping("/session")
+	@PostMapping("/sessions")
 	public Session saveSession(@RequestBody @Valid Session session) {
 		return sessionService.saveSession(session);
 	}
 	
 	@ApiOperation(value="Deleta uma sessão")
-	@DeleteMapping("/session")
+	@DeleteMapping("/sessions")
 	public void deleteSession(@RequestBody @Valid Session session) {
 		if (sessionService.findSession(session.getId()) == null)
 			throw new ResourceNotFoundException("Sessão " + session.getId() + " não encontrada.");
@@ -61,7 +61,7 @@ public class SessionResource {
 	}
 	
 	@ApiOperation(value="Altera uma sessão")
-	@PutMapping("/session")
+	@PutMapping("/sessions")
 	public Session updateSession(@RequestBody @Valid Session session) {
 		if (sessionService.findSession(session.getId()) == null)
 			throw new ResourceNotFoundException("Sessão " + session.getId() + " não encontrada.");
