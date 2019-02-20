@@ -88,6 +88,10 @@ public class SubjectService {
 		
 		List<Vote> votes = currentSubject.getVotes();
 		
+		if (votes.size() == 0)
+			throw new ValidationException("Pauta " + currentSubject.getSession().getId() + 
+					" não possui votos.");
+		
 		long votesYes = (votes.stream().filter(vote -> vote.isVote())).count();
 		
 		long votesNo = (votes.stream().filter(vote -> !vote.isVote())).count();

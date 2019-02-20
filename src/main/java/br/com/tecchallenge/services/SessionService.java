@@ -5,12 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tecchallenge.models.Session;
+import br.com.tecchallenge.models.Subject;
 import br.com.tecchallenge.repositories.SessionRepository;
+import br.com.tecchallenge.repositories.SubjectRepository;
 
 @Service
 public class SessionService {
 	
 	private SessionRepository sessionRepository;
+	private SubjectRepository subjectRepository;
 
 	@Autowired
 	public SessionService(SessionRepository sessionRepository) {
@@ -27,6 +30,11 @@ public class SessionService {
 	}
 	
 	public Session saveSession(Session session) {
+
+		Subject subject = session.getSubject();
+		
+		subject.setSession(session);
+
 		return sessionRepository.save(session);
 		
 	}
@@ -36,6 +44,10 @@ public class SessionService {
 	}
 	
 	public Session updateSession(Session session) {
+		Subject subject = session.getSubject();
+		
+		subject.setSession(session);
+
 		return sessionRepository.save(session);
 	}
 	
