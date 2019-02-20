@@ -18,21 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.Subject;
 import br.com.tecchallenge.services.SubjectService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/api")
+@Api(value="API REST Pautas de Votação")
 public class SubjectResource {
 	
 	@Autowired
 	SubjectService subjectService;
 	
+	@ApiOperation(value="Retorna uma lista de pautas")
 	@GetMapping("/subjects")
 	public List<Subject> listSubjects(){
 		return subjectService.listSubjects();
 	}
 	
+	@ApiOperation(value="Retorna uma pauta")
 	@GetMapping("/subject/{id}")
 	public Subject findSubject(@PathVariable(value="id") long id){
 		if (subjectService.findSubject(id) == null)
@@ -41,11 +46,13 @@ public class SubjectResource {
 		return subjectService.findSubject(id);
 	}
 	
+	@ApiOperation(value="Salva uma pauta")
 	@PostMapping("/subject")
 	public Subject saveSubject(@RequestBody @Valid Subject subject) {
 		return subjectService.saveSubject(subject);
 	}
 	
+	@ApiOperation(value="Deleta uma pauta")
 	@DeleteMapping("/subject")
 	public void deleteSubject(@RequestBody @Valid Subject subject) {
 		if (subjectService.findSubject(subject.getId()) == null)
@@ -54,6 +61,7 @@ public class SubjectResource {
 		subjectService.deleteSubject(subject);
 	}
 	
+	@ApiOperation(value="Altera uma pauta")
 	@PutMapping("/subject")
 	public Subject updateSubject(@RequestBody @Valid Subject subject) {
 		if (subjectService.findSubject(subject.getId()) == null)
@@ -62,6 +70,7 @@ public class SubjectResource {
 		return subjectService.updateSubject(subject);
 	}
 	 
+	@ApiOperation(value="Retorna uma pauta com o resultado dos votos calculado")
 	@GetMapping("/subject/{id}/result")
 	public Subject findSubjectResult(@PathVariable(value="id") long id){
 		if (subjectService.findSubject(id) == null)

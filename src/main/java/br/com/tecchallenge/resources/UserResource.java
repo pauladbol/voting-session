@@ -18,21 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.User;
 import br.com.tecchallenge.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/api")
+@Api(value="API REST Usuários")
 public class UserResource {
 	
 	@Autowired
 	UserService userService;
 	
+	@ApiOperation(value="Retorna uma lista de usuários")
 	@GetMapping("/users")
 	public List<User> listUsers(){
 		return userService.listUsers();
 	}
 	
+	@ApiOperation(value="Retorna um usuário")	
 	@GetMapping("/user/{id}")
 	public User findUser(@PathVariable(value="id") long id){
 		if (userService.findUser(id) == null)
@@ -40,11 +45,13 @@ public class UserResource {
 		return userService.findUser(id);
 	}
 	
+	@ApiOperation(value="Salva um usuário")
 	@PostMapping("/user")
 	public User saveUser(@RequestBody @Valid User user) {
 		return userService.saveUser(user);
 	}
 	
+	@ApiOperation(value="Deleta um usuário")
 	@DeleteMapping("/user")
 	public void deleteUser(@RequestBody @Valid User user) {
 		if (userService.findUser(user.getId()) == null)
@@ -52,6 +59,7 @@ public class UserResource {
 		userService.deleteUser(user);
 	}
 	
+	@ApiOperation(value="Altera um usuário")
 	@PutMapping("/user")
 	public User updateUser(@RequestBody @Valid User user) {
 		if (userService.findUser(user.getId()) == null)

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.Vote;
 import br.com.tecchallenge.services.VoteService;
+import io.swagger.annotations.ApiOperation;
 
 
 @CrossOrigin(origins = "*")
@@ -28,11 +29,13 @@ public class VoteResource {
 	@Autowired
 	VoteService voteService;
 	
+	@ApiOperation(value="Retorna uma lista de votos")
 	@GetMapping("/votes")
 	public List<Vote> listVotes(){
 		return voteService.listVotes();
 	}
 	
+	@ApiOperation(value="Retorna um voto")
 	@GetMapping("/vote/{id}")
 	public Vote findVote(@PathVariable(value="id") long id){
 		if (voteService.findVote(id) == null)
@@ -41,11 +44,13 @@ public class VoteResource {
 		return voteService.findVote(id);
 	}
 	
+	@ApiOperation(value="Salva um voto")
 	@PostMapping("/vote")
 	public Vote saveVote(@RequestBody @Valid Vote vote) {
 			return voteService.saveVote(vote);		
 	}
 	
+	@ApiOperation(value="Deleta um voto")
 	@DeleteMapping("/vote")
 	public void deleteVote(@RequestBody @Valid Vote vote) {
 		if (voteService.findVote(vote.getId()) == null)
@@ -54,6 +59,7 @@ public class VoteResource {
 		voteService.deleteVote(vote);
 	}
 	
+	@ApiOperation(value="Altera um voto")
 	@PutMapping("/vote")
 	public Vote updateVote(@RequestBody @Valid Vote vote) {
 		if (voteService.findVote(vote.getId()) == null)

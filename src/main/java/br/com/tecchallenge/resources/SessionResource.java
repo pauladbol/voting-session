@@ -18,20 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tecchallenge.exceptions.ResourceNotFoundException;
 import br.com.tecchallenge.models.Session;
 import br.com.tecchallenge.services.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/api")
+@Api(value="API REST Sessões de Votação")
 public class SessionResource {
 	
 	@Autowired
 	SessionService sessionService;
 	
+	@ApiOperation(value="Retorna uma lista de sessões")
 	@GetMapping("/sessions")
 	public List<Session> listSessions(){
 		return sessionService.listSessions();
 	}
 	
+	@ApiOperation(value="Retorna uma sessão")
 	@GetMapping("/session/{id}")
 	public Session findSession(@PathVariable(value="id") long id){
 		if (sessionService.findSession(id) == null)
@@ -40,11 +45,13 @@ public class SessionResource {
 		return sessionService.findSession(id);
 	}
 	
+	@ApiOperation(value="Salva uma sessão")
 	@PostMapping("/session")
 	public Session saveSession(@RequestBody @Valid Session session) {
 		return sessionService.saveSession(session);
 	}
 	
+	@ApiOperation(value="Deleta uma sessão")
 	@DeleteMapping("/session")
 	public void deleteSession(@RequestBody @Valid Session session) {
 		if (sessionService.findSession(session.getId()) == null)
@@ -53,6 +60,7 @@ public class SessionResource {
 		sessionService.deleteSession(session);
 	}
 	
+	@ApiOperation(value="Altera uma sessão")
 	@PutMapping("/session")
 	public Session updateSession(@RequestBody @Valid Session session) {
 		if (sessionService.findSession(session.getId()) == null)
